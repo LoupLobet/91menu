@@ -7,7 +7,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
 
-//#include "utf8.h"
 #include "drw.h"
 #include "util.h"
 

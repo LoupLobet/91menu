@@ -8,7 +8,7 @@ static unsigned int padpx    = 2;	/* padding between menu lines */
 
 /* controls */
 static unsigned int selbuttons[]  = { 1, 0, 1 };	/* mouse buttons to select item */
-static unsigned int selevent      = ButtonPress;	/* mouse event to select an item */
+static unsigned int selevent      = ButtonRelease;	/* mouse event to select an item */
 
 static char *lastselfile = "/tmp/91menu";	/* file where the last selected item will be written */
 

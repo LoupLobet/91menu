@@ -294,6 +294,7 @@ run(void)
 			if (button < sizeof(selbuttons) / sizeof(unsigned int) &&
 			    selbuttons[ev.xbutton.button - 1] && selevent == ev.type)
 				return drw_getpointersel(drw, itemnb);
+			drawmenu(0);
 			break;
 		case DestroyNotify:
 			if (ev.xdestroywindow.window != win)
@@ -364,7 +365,6 @@ winsetup(XWindowAttributes *wa)
 		error("cannot query pointer");
 
 	sel = fetchlastsel(lastselfile);
-	printf("%d\n", sel);
 
 	/* move the menu to center the first item on the pointer */
 	x -= borderpx + w / 2;

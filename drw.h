@@ -1,3 +1,5 @@
+/* See LICENCE file for copyright and licence details */
+
 typedef XftColor Clr;
 
 typedef struct {

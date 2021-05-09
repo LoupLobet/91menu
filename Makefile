@@ -1,3 +1,5 @@
+# See LICENCE file for copyright and licence details
+
 VERSION = 1.0
 CC = cc
 PREFIX = /usr/local

@@ -1,6 +1,6 @@
 VERSION = 1.0
 CC = cc
-PREFIX = /usr/loca
+PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/man
 PROGNAME = 91menu
 
@@ -41,7 +41,7 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -r 91menu ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/91menu
-	sed "s/VERSION/${VERSION}/g" <91menu.1 >${DESTDIR}${MANPREFIX}/man1/91menu.1
+	#sed "s/VERSION/${VERSION}/g" <91menu.1 >${DESTDIR}${MANPREFIX}/man1/91menu.1
 
 
 uninstall:

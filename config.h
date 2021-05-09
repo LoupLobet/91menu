@@ -7,6 +7,7 @@ static unsigned int gappx    = 10;	/* left and right side gaps */
 static unsigned int padpx    = 2;	/* padding between menu lines */
 
 /* controls */
+static unsigned int grabmouse     = 1;				/* 0 = ignore mouse clicks outside of the window */
 static unsigned int selbuttons[]  = { 1, 0, 1 };	/* mouse buttons to select item */
 static unsigned int selevent      = ButtonRelease;	/* mouse event to select an item */
 

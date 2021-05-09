@@ -51,12 +51,30 @@ main(int argc, char *argv[])
 	int i, sel;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-u"))
+		if (!strcmp(argv[i], "-g"))
+			grabmouse = 1;
+		else if (!strcmp(argv[i], "-u")) {
 			usage();
-		else if (i + 1 == argc)
+			exit(0);
+		} else if (!strcmp(argv[i], "-v")) {
+			puts("91menu-"VERSION);
+			exit(0);
+		} else if (i + 1 == argc)
 			usage();
-		if (!strcmp(argv[i], "-l"))
+		if (!strcmp(argv[i], "-f"))
 			lastselfile = argv[++i];
+		else if (!strcmp(argv[i], "-bd"))
+			colornames[BD] = argv[++i];
+		else if (!strcmp(argv[i], "-bg"))
+			colornames[BG] = argv[++i];
+		else if (!strcmp(argv[i], "-fg"))
+			colornames[FG] = argv[++i];
+		else if (!strcmp(argv[i], "-nv"))
+			colornames[NV] = argv[++i];
+		else if (!strcmp(argv[i], "-sl"))
+			colornames[SL] = argv[++i];
+		else if (!strcmp(argv[i], "-ft"))
+			fontname = argv[++i];
 		else
 			usage();
 	}
@@ -140,9 +158,11 @@ drawmenu(int nosel)
 		x = (drw->w - items[i].extw) / 2;
 		y = i * (drw->h / itemnb) + font.xfont->ascent + padpx;
 		if (i == sel)
-			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font, &scheme[NV], x, y);
+			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font,
+			             &scheme[NV], x, y);
 		else
-			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font, &scheme[FG], x, y);
+			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font,
+		                 &scheme[FG], x, y);
 	}
 	drw_map(drw, win, 0, 0, drw->w, drw->h);
 }
@@ -186,10 +206,11 @@ grabbuttons(void)
 {
 	int i;
 
-	for (i = 1; i - 1 < sizeof(selbuttons) / sizeof(unsigned int); i++)
+	for (i = 1; i - 1 < sizeof(selbuttons) / sizeof(unsigned int); i++) {
 		XGrabButton(dpy, i, AnyModifier, root, True,
 		            ButtonPressMask | ButtonReleaseMask,
 		            GrabModeAsync, GrabModeAsync, None, None);
+	}
 }
 
 static void
@@ -214,7 +235,8 @@ loadcolor(const char *cname, Clr *c)
 {
 	if (cname == NULL || c == NULL)
 		return 1;
-	if (!XftColorAllocName(dpy, DefaultVisual(dpy, screen), DefaultColormap(dpy, screen), cname, c))
+	if (!XftColorAllocName(dpy, DefaultVisual(dpy, screen),
+	    DefaultColormap(dpy, screen), cname, c))
 		error("could not allocate color: %s", cname);
 	return 0;
 }
@@ -282,7 +304,8 @@ run(void)
 
 	drw_setscheme(drw, scheme);
 	drw_setfont(drw, font);
-	grabbuttons();
+	if (grabmouse)
+		grabbuttons();
 	XSync(dpy, False);
 	while (!XNextEvent(dpy, &ev)) {
 		if (XFilterEvent(&ev, win))
@@ -338,7 +361,7 @@ savelastsel(char *file, char *sel)
 static void
 usage(void)
 {
-	fputs("usage: 91menu [-uv] [-l file]", stderr);
+	fputs("usage: 91menu [-uv] [-l file]\n", stderr);
 	exit(1);
 }
 

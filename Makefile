@@ -28,6 +28,9 @@ options:
 	@echo "CFLAGS  = ${CFLAGS}"
 	@echo "CC      = ${CC}"
 
+config.h:
+	cp config.def.h $@
+
 .c.o :
 	${CC} -c ${CFLAGS} $<
 
@@ -38,6 +41,7 @@ clean_object:
 	rm -f 91menu.o drw.o utf8.o util.o
 clean:
 	rm -f 91menu 91menu.o drw.o utf8.o util.o *.core
+	[ -e config.h ] || cp config.def.h config.h
 
 install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin

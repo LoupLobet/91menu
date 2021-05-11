@@ -4,7 +4,7 @@ static char *lastselfile = "/tmp/91menu";	/* file where the last selected item w
 
 /* appearance */
 static unsigned int minwidth = 20;	/* minimal menu width */
-static unsigned int borderpx = 2;	/* window border width */
+static unsigned int borderpx = 1;	/* window border width */
 static unsigned int gappx    = 10;	/* left and right side gaps */
 static unsigned int padpx    = 2;	/* padding between menu lines */
 
@@ -14,13 +14,13 @@ static unsigned int buttons[]	= { 1, 0, 1 };		/* mouse buttons to select item */
 static unsigned int buttonevent	= ButtonRelease;	/* mouse event to select an item */
 
 /* font */
-static const char *fontname = "GoMono Nerd Font:pixelsize=13:antialias=true;autohint=true";
+static const char *fontname = "GoMono Nerd Font:pixelsize=11:antialias=true;autohint=true";
 
 /* color scheme */
 static const char *colornames[COLORNB] = {
-	[FG] = "#000000",	/* foreground */
-	[BG] = "#ebffed",	/* background */
-	[BD] = "#9bc99e",	/* border */
-	[NV] = "#ebffed",	/* inverted text */
-	[SL] = "#477e45",	/* selection */
+	[FG] = "#586e75",	/* foreground */
+	[BG] = "#002b36",	/* background */
+	[BD] = "#586e75",	/* border */
+	[NV] = "#93a1a1",	/* inverted text */
+	[SL] = "#073642",	/* selection */
 };

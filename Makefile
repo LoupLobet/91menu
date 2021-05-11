@@ -47,7 +47,7 @@ install: all
 	mkdir -p ${DESTDIR}${PREFIX}/bin
 	cp -r 91menu ${DESTDIR}${PREFIX}/bin
 	chmod 755 ${DESTDIR}${PREFIX}/bin/91menu
-	#sed "s/VERSION/${VERSION}/g" <91menu.1 >${DESTDIR}${MANPREFIX}/man1/91menu.1
+	sed "s/VERSION/${VERSION}/g" <91menu.1 >${DESTDIR}${MANPREFIX}/man1/91menu.1
 
 
 uninstall:

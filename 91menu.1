@@ -1,0 +1,57 @@
+.TH 91MENU 1 91menu\-VERSION
+.SH NAME
+91menu \- graphical mouse-driven menu
+.SH SYNOPSIS
+.B 91menu
+.RB [ \-guv ]
+.RB [ \-f
+.IR file ]
+.RB [ \-bd
+.IR color ]
+.RB [ \-bg
+.IR color ]
+.RB [ \-fg
+.IR color ]
+.RB [ \-nv
+.IR color ]
+.RB [ \-sl
+.IR color ]
+.RB [ \-ft
+.IR font ]
+.SH OPTIONS
+.TP
+.B \-g
+Grab every mouse buttons specified in config.h outside of the menu window.
+.TP
+.B \-u
+Display the 91menu usage message.
+.TP
+.B \-v
+Display the 91menu version.
+.TP
+.B \-f file
+Specify the file where 91menu should read the last selected item and write the selected item.
+.TP
+.B \-bd
+Specify the border color of the menu.
+.TP
+.B \-bg
+Specify the background color of the menu.
+.TP
+.B \-fg
+Specify the foreground color of the menu.
+.TP
+.B \-nv
+Specify the inverted text color of the menu.
+.TP
+.B \-sl
+Specify the selection color of the menu.
+.SH DESCRIPTION
+.B 91menu
+is a graphical menu, meant to be a more versatile alternative to 9menu (to be more than a program launcher). The purpose of 91menu is to take a list of ordenated newline\-separated items from the sandard input, and display in the same order in a vertical menu, where items are selectale.
+
+An item can be selected by pressing any mouse buttons over it (mouse buttons able to select items are specified in config.h, and can be changed). When an item is selected, it is printed on the standard input, 91menu terminates, and the selected item is written as the last selected item, to a file specified with the -f option (or by default in the file specified in config.h). The next time 91menu will be executed, it will popup with the last selected item under the mouse cursor. The file specified with the -f option (or config.h) is used for reading and writing, and the readed item is overwriten by the selected item.
+
+Unlike 9menu, 91menu only print the selected item to standard output (instead of running a given command), this point make 91menu way more flexible, particulary usefull combined with shell scripts.
+.SH SEE ALSO
+.IR 9menu(1)

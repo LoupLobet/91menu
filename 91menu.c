@@ -208,7 +208,7 @@ grabbuttons(void)
 {
 	int i;
 
-	for (i = 1; i - 1 < sizeof(selbuttons) / sizeof(unsigned int); i++) {
+	for (i = 1; i - 1 < sizeof(buttons) / sizeof(unsigned int); i++) {
 		XGrabButton(dpy, i, AnyModifier, root, True,
 		            ButtonPressMask | ButtonReleaseMask,
 		            GrabModeAsync, GrabModeAsync, None, None);
@@ -316,8 +316,8 @@ run(void)
 		case ButtonPress:
 		case ButtonRelease:
 			button = ev.xbutton.button - 1;
-			if (button < sizeof(selbuttons) / sizeof(unsigned int) &&
-			    selbuttons[ev.xbutton.button - 1] && selevent == ev.type)
+			if (button < sizeof(buttons) / sizeof(unsigned int) &&
+			    buttons[ev.xbutton.button - 1] && buttonevent == ev.type)
 				return drw_getpointersel(drw, itemnb);
 			drawmenu(0);
 			break;
@@ -363,7 +363,8 @@ savelastsel(char *file, char *sel)
 static void
 usage(void)
 {
-	fputs("usage: 91menu [-uv] [-l file]\n", stderr);
+	fputs("usage: 91menu [-guv] [-f file] [-bd color] [-bg color] [-fg color]\n"
+	      "              [-nv color] [-sl color] [-ft font]\n", stderr);
 	exit(1);
 }
 

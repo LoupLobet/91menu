@@ -20,7 +20,7 @@ enum { FG, BG, BD, NV, SL, COLORNB };
 enum { PRESS, RELEASE };
 
 static void	 cleanup(void);
-static Fnt	 createfont(const char *);
+static Fnt	 createfont(const char *, FcPattern *);
 static Clr	*createscheme(const char *[], int);
 static void	 drawmenu(int);
 static int	 fetchlastsel(char *);
@@ -28,7 +28,6 @@ static void	 getextw(char *, unsigned int, Fnt *, unsigned int *);
 static void	 grabbuttons(void);
 static void	 grabfocus(void);
 static int	 loadcolor(const char *, Clr *);
-static int 	 loadfont(const char *, FcPattern *, Fnt *);
 static void	 readstdin(void);
 static int	 run(void);
 static int	 savelastsel(char *, char *);
@@ -91,7 +90,7 @@ main(int argc, char *argv[])
 	if (!XGetWindowAttributes(dpy, root, &wa))
 		error("could not get window attributes: 0x%lx", root);
 	drw = drw_create(dpy, root, screen, 0, 0, wa.width, wa.height);
-	font = createfont(fontname);
+	font = createfont(fontname, NULL);
 	scheme = createscheme(colornames, COLORNB);
 	readstdin();
 	winsetup(&wa);
@@ -117,14 +116,31 @@ cleanup(void)
 }
 
 static Fnt
-createfont(const char *fname)
+createfont(const char *fname, FcPattern *fpattern)
 {
 	Fnt f;
+	FcBool iscolorfont;
+	FcPattern *pattern = NULL;
+	XftFont *xfont = NULL;
 
-	if (fname == NULL)
-		error("font name: NULL pointer");
-	if (loadfont(fname, NULL, &f))
-		error("could not load font: %s\n", fname);
+	if (fname) {
+		if ((xfont = XftFontOpenName(dpy, screen, fname)) == NULL)
+			error("could not load font from name: %s", fname);
+		if ((pattern = FcNameParse((FcChar8 *) fname)) == NULL)
+			error("could not load font from pattern: %s", fname);
+	} else if (fpattern) {
+		if ((xfont = XftFontOpenPattern(dpy, fpattern)))
+			error("could not load font from pattern");
+	} else
+		error("cannot load unspecified font");
+	/* avoid color fonts to be used */
+	if (FcPatternGetBool(xfont->pattern, FC_COLOR, 0, &iscolorfont) ==
+	   FcResultMatch &&  iscolorfont) {
+		XftFontClose(dpy, xfont);
+		error("could not load color fonts");
+	}
+	f.xfont = xfont;
+	f.pattern = pattern;
 	return f;
 }
 
@@ -241,40 +257,6 @@ loadcolor(const char *cname, Clr *c)
 	if (!XftColorAllocName(dpy, DefaultVisual(dpy, screen),
 	    DefaultColormap(dpy, screen), cname, c))
 		error("could not allocate color: %s", cname);
-	return 0;
-}
-
-static int
-loadfont(const char *fname, FcPattern *fpattern, Fnt *f)
-{
-	FcBool iscolorfont;
-	FcPattern *pattern = NULL;
-	XftFont *xfont = NULL;
-
-	if (fname) {
-		if ((xfont = XftFontOpenName(dpy, screen, fname)) == NULL) {
-			warning("could not load font from name: %s\n", fname);
-			return 1;
-		}
-		if ((pattern = FcNameParse((FcChar8 *) fname)) == NULL) {
-			warning("could not load font from pattern: %s\n", fname);
-			return 1;
-		}
-	} else if (fpattern) {
-		if ((xfont = XftFontOpenPattern(dpy, fpattern))) {
-			warning("could not load font from pattern\n");
-			return 1;
-		}
-	} else
-		error("cannot load unspecified font");
-	/* avoid color fonts to be used */
-	if (FcPatternGetBool(xfont->pattern, FC_COLOR, 0, &iscolorfont) ==
-	   FcResultMatch &&  iscolorfont) {
-		XftFontClose(dpy, xfont);
-		return 1;
-	}
-	f->xfont = xfont;
-	f->pattern = pattern;
 	return 0;
 }
 

@@ -1,7 +1,7 @@
 # See LICENCE file for copyright and licence details
 
 VERSION = 1.0
-CC = gcc
+CC = cc
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/man
 PROGNAME = 91menu

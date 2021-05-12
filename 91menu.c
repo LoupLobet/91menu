@@ -1,9 +1,10 @@
 /* See LICENCE file for copyright and licence details */
-
+#include <ctype.h>
 #include <locale.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <unistd.h>
 
 #include <X11/Xlib.h>
@@ -154,7 +155,7 @@ drawmenu(int nosel)
 	/* draw background color */
 	drw_drawrect(drw, 0, 0, drw->w, drw->h, BG);
 	/* draw selected item box */
-	if (!nosel && (sel = drw_getpointersel(drw, itemnb)) >= 0)
+	if ((sel = drw_getpointersel(drw, itemnb)) >= 0 && !nosel)
 		drw_drawrect(drw, 0, sel * (drw->h / itemnb), drw->w, drw->h / itemnb, SL);
 	for (i = 0; i < itemnb; i++) {
 		x = (drw->w - items[i].extw) / 2;

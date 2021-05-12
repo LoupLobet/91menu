@@ -1,7 +1,7 @@
 # See LICENCE file for copyright and licence details
 
 VERSION = 1.0
-CC = cc
+CC = gcc
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/man
 PROGNAME = 91menu
@@ -16,7 +16,7 @@ FREETYPELIB = -lfontconfig -lXft
 INCS = -I${X11INC} -I${FREETYPEINC}
 LIBS = -L${X11LIB} -lX11 ${FREETYPELIB} #$(XINERAMALIBS)
 
-CPPFLAGS = -DVERSION=\"${VERSION}\" #$(XINERAMAFLAGS)
+CPPFLAGS = -DVERSION=\"${VERSION}\" -D_DEFAULT_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE=700 -D_POSIX_C_SOURCE=2000809L
 CFLAGS = -std=c99 -pedantic -Wall -Os ${CPPFLAGS} ${INCS}
 LDFLAGS = ${LIBS}
 

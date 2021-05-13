@@ -17,7 +17,7 @@
 #define _XOPEN_SOURCE 700
 
 enum { FG, BG, BD, NV, SL, COLORNB };
-enum { PRESS, RELEASE };
+enum { LEFT, CENTER, RIGHT };
 
 static void	 cleanup(void);
 static Fnt	 createfont(const char *, FcPattern *);
@@ -53,8 +53,14 @@ main(int argc, char *argv[])
 	int i, sel;
 
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i], "-g"))
+		if (!strcmp(argv[i], "-c"))
+			textpos = CENTER;
+		else if (!strcmp(argv[i], "-g"))
 			grabmouse = 1;
+		else if (!strcmp(argv[i], "-l"))
+			textpos = LEFT;
+		else if (!strcmp(argv[i], "-r"))
+			textpos = RIGHT;
 		else if (!strcmp(argv[i], "-u")) {
 			usage();
 			exit(0);
@@ -63,7 +69,7 @@ main(int argc, char *argv[])
 			exit(0);
 		} else if (i + 1 == argc)
 			usage();
-		if (!strcmp(argv[i], "-f"))
+		else if (!strcmp(argv[i], "-f"))
 			lastselfile = argv[++i];
 		else if (!strcmp(argv[i], "-bd"))
 			colornames[BD] = argv[++i];
@@ -168,13 +174,23 @@ drawmenu(int nosel)
 	int sel;
 	int x, y;
 
-	/* draw background color */
+	/* draw background */
 	drw_drawrect(drw, 0, 0, drw->w, drw->h, BG);
 	/* draw selected item box */
 	if ((sel = drw_getpointersel(drw, itemnb)) >= 0 && !nosel)
 		drw_drawrect(drw, 0, sel * (drw->h / itemnb), drw->w, drw->h / itemnb, SL);
 	for (i = 0; i < itemnb; i++) {
-		x = (drw->w - items[i].extw) / 2;
+		switch (textpos) {
+		case LEFT:
+			x = gappx;
+			break;
+		case CENTER:
+			x = (drw->w - items[i].extw) / 2;
+			break;
+		case RIGHT:
+			x = drw->w - items[i].extw - gappx;
+			break;
+		}
 		y = i * (drw->h / itemnb) + font.xfont->ascent + padpx;
 		if (i == sel)
 			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font,
@@ -346,7 +362,7 @@ savelastsel(char *file, char *sel)
 static void
 usage(void)
 {
-	fputs("usage: 91menu [-guv] [-f file] [-bd color] [-bg color] [-fg color]\n"
+	fputs("usage: 91menu [-cglruv] [-f file] [-bd color] [-bg color] [-fg color]\n"
 	      "              [-nv color] [-sl color] [-ft font]\n", stderr);
 	exit(1);
 }

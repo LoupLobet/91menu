@@ -3,7 +3,7 @@
 91menu \- graphical mouse-driven menu
 .SH SYNOPSIS
 .B 91menu
-.RB [ \-guv ]
+.RB [ \-cglruv ]
 .RB [ \-f
 .IR file ]
 .RB [ \-bd
@@ -20,37 +20,47 @@
 .IR font ]
 .SH OPTIONS
 .TP
+.B \-c
+Aligns the items to the center of the window.
+.TP
 .B \-g
-Grab every mouse buttons specified in config.h outside of the menu window.
+Grabs every mouse buttons specified in config.h outside of the menu window.
+.TP
+.B \-l
+Aligns the items to the left side of the window.
+.TP
+.B \-r
+Aligns the items to the right side of the window.
 .TP
 .B \-u
-Display the 91menu usage message.
+Displays the 91menu usage message.
 .TP
 .B \-v
-Display the 91menu version.
+Displays the 91menu version.
 .TP
 .B \-f file
-Specify the file where 91menu should read the last selected item and write the selected item.
+Specifies the file where 91menu should read the last selected item and write the selected one.
 .TP
 .B \-bd
-Specify the border color of the menu.
+Specifies the border color of the menu.
 .TP
 .B \-bg
-Specify the background color of the menu.
+Specifies the background color of the menu.
 .TP
 .B \-fg
-Specify the foreground color of the menu.
+Specifies the foreground color of the menu.
 .TP
 .B \-nv
-Specify the inverted text color of the menu.
+Specifies the inverted text color of the menu.
 .TP
 .B \-sl
-Specify the selection color of the menu.
+Specifies the selection color of the menu.
 .SH DESCRIPTION
 .B 91menu
-is a graphical menu, meant to be a more versatile alternative to 9menu (to be more than a program launcher). The purpose of 91menu is to take a list of ordenated newline\-separated items from the sandard input, and display in the same order in a vertical menu, where items are selectale.
+is a graphical menu, meant to be a more versatile alternative to 9menu (to be more than a program launcher). The purpose of 91menu is to take a list of ordenated newline\-separated items from the sandard input, and display in the same order in a vertical menu, where items are selectable.
 
-An item can be selected by pressing any mouse buttons over it (mouse buttons able to select items are specified in config.h, and can be changed). When an item is selected, it is printed on the standard input, 91menu terminates, and the selected item is written as the last selected item, to a file specified with the -f option (or by default in the file specified in config.h). The next time 91menu will be executed, it will popup with the last selected item under the mouse cursor. The file specified with the -f option (or config.h) is used for reading and writing, and the readed item is overwriten by the selected item.
+An item can be selected by pressing any mouse buttons over it (see config.h). When an item is selected, it is printed on the standard output, 91menu terminates, and the selected item is written as "last selected item" to a file specified with the -f option (or by default in the file specified in config.h). The next time 91menu will be executed, it will popup with the last selected item under the mouse cursor. The file specified with the -f option (or config.h) is used for reading and writing, and the readed item is overwriten by the selected one.
+If some grabbed mouse buttons are pressed outside of the window, 91menu terminates, and nothing is printed on the standard output.
 
 Unlike 9menu, 91menu only prints the selected item to standard output (instead of running a given command), this point makes 91menu way more flexible, and particulary usefull combined with a bunch of shell scripts.
 .SH SEE ALSO

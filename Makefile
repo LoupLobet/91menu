@@ -2,16 +2,18 @@
 
 VERSION = 1.0
 CC = cc
-PREFIX = /usr/local
-MANPREFIX = ${PREFIX}/man
 PROGNAME = 91menu
+PREFIX = /usr/local
+MANPREFIX = ${PREFIX}/share/man
+# OpenBSD uncomment
+#MANPREFIX = ${PREFIX}/man
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
-FREETYPEINC = ${X11INC}/freetype2
+FREETYPEINC = /usr/include/freetype2
+# OpenBSD uncomment
+#FREETYPEINC = ${X11INC}/freetype2
 FREETYPELIB = -lfontconfig -lXft
-#XINERAMALIBS  = -lXinerama
-#XINERAMAFLAGS = -DXINERAMA
 
 INCS = -I${X11INC} -I${FREETYPEINC}
 LIBS = -L${X11LIB} -lX11 ${FREETYPELIB} #$(XINERAMALIBS)

@@ -55,10 +55,10 @@ main(int argc, char *argv[])
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-c"))
 			textpos = CENTER;
-		else if (!strcmp(argv[i], "-g"))
-			grabmouse = 1;
 		else if (!strcmp(argv[i], "-l"))
 			textpos = LEFT;
+		else if (!strcmp(argv[i], "-m"))
+			grabmouse = 1;
 		else if (!strcmp(argv[i], "-r"))
 			textpos = RIGHT;
 		else if (!strcmp(argv[i], "-u")) {
@@ -77,6 +77,8 @@ main(int argc, char *argv[])
 			colornames[BG] = argv[++i];
 		else if (!strcmp(argv[i], "-fg"))
 			colornames[FG] = argv[++i];
+		else if (!strcmp(argv[i], "-g"))
+			geometry = argv[++i];
 		else if (!strcmp(argv[i], "-nv"))
 			colornames[NV] = argv[++i];
 		else if (!strcmp(argv[i], "-sl"))
@@ -179,6 +181,7 @@ drawmenu(int nosel)
 	/* draw selected item box */
 	if ((sel = drw_getpointersel(drw, itemnb)) >= 0 && !nosel)
 		drw_drawrect(drw, 0, sel * (drw->h / itemnb), drw->w, drw->h / itemnb, SL);
+
 	for (i = 0; i < itemnb; i++) {
 		switch (textpos) {
 		case LEFT:
@@ -191,13 +194,12 @@ drawmenu(int nosel)
 			x = drw->w - items[i].extw - gappx;
 			break;
 		}
-		y = i * (drw->h / itemnb) + font.xfont->ascent + padpx;
+		y = i * (drw->h / itemnb) + 0.5 * drw->font.xfont->ascent +
+		    (drw->h / itemnb - drw->font.xfont->descent) / 2;
 		if (i == sel)
-			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font,
-			             &scheme[NV], x, y);
+			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font, &scheme[NV], x, y);
 		else
-			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font,
-		                 &scheme[FG], x, y);
+			drw_drawtext(drw, items[i].text, strlen(items[i].text), &font, &scheme[FG], x, y);
 	}
 	drw_map(drw, win, 0, 0, drw->w, drw->h);
 }
@@ -362,8 +364,8 @@ savelastsel(char *file, char *sel)
 static void
 usage(void)
 {
-	fputs("usage: 91menu [-cglruv] [-f file] [-bd color] [-bg color] [-fg color]\n"
-	      "              [-nv color] [-sl color] [-ft font]\n", stderr);
+	fputs("usage: 91menu [-clmruv] [-f file] [-bd color] [-bg color] [-fg color]\n"
+	      "              [-g geometry] [-nv color] [-sl color] [-ft font]\n", stderr);
 	exit(1);
 }
 
@@ -404,6 +406,11 @@ winsetup(XWindowAttributes *wa)
 		y = 0;
 	else if (y + h > wa->height)
 		y = wa->height - h - borderpx * 2;
+
+	/* use a predefined geometry */
+	if (geometry != NULL)
+		XParseGeometry(geometry, &x, &y, &w, &h);
+
 	drw_resize(drw, x + borderpx, y + borderpx, w, h);
 
 	/* move pointer to the center of the first item */

@@ -3,7 +3,7 @@
 91menu \- graphical mouse-driven menu
 .SH SYNOPSIS
 .B 91menu
-.RB [ \-cglruv ]
+.RB [ \-clmruv ]
 .RB [ \-f
 .IR file ]
 .RB [ \-bd
@@ -12,6 +12,8 @@
 .IR color ]
 .RB [ \-fg
 .IR color ]
+.RB [ \-g
+.IR geometry ]
 .RB [ \-nv
 .IR color ]
 .RB [ \-sl
@@ -23,11 +25,11 @@
 .B \-c
 Aligns the items to the center of the window.
 .TP
-.B \-g
-Grabs every mouse buttons specified in config.h outside of the menu window.
-.TP
 .B \-l
 Aligns the items to the left side of the window.
+.TP
+.B \-m
+Grabs every mouse buttons specified in config.h outside of the menu window.
 .TP
 .B \-r
 Aligns the items to the right side of the window.
@@ -41,19 +43,22 @@ Displays the 91menu version.
 .B \-f file
 Specifies the file where 91menu should read the last selected item and write the selected one.
 .TP
-.B \-bd
+.B \-bd color
 Specifies the border color of the menu.
 .TP
-.B \-bg
+.B \-bg color
 Specifies the background color of the menu.
 .TP
-.B \-fg
+.B \-fg color
 Specifies the foreground color of the menu.
 .TP
-.B \-nv
+.B \-g geometry
+Specifies the menu geometry. The form is [=][<width>{xX}<height>][{+-}<xoffset>{+-}<yoffset>]. See XParseGeometry(3)
+.TP
+.B \-nv color
 Specifies the inverted text color of the menu.
 .TP
-.B \-sl
+.B \-sl color
 Specifies the selection color of the menu.
 .SH DESCRIPTION
 .B 91menu

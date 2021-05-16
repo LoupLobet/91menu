@@ -6,13 +6,13 @@ PROGNAME = 91menu
 PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 # OpenBSD uncomment
-#MANPREFIX = ${PREFIX}/man
+MANPREFIX = ${PREFIX}/man
 
 X11INC = /usr/X11R6/include
 X11LIB = /usr/X11R6/lib
 FREETYPEINC = /usr/include/freetype2
 # OpenBSD uncomment
-#FREETYPEINC = ${X11INC}/freetype2
+FREETYPEINC = ${X11INC}/freetype2
 FREETYPELIB = -lfontconfig -lXft
 
 INCS = -I${X11INC} -I${FREETYPEINC}

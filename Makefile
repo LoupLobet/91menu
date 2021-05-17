@@ -1,6 +1,6 @@
 # See LICENCE file for copyright and licence details
 
-VERSION = 1.0
+VERSION = 1.1
 CC = cc
 PROGNAME = 91menu
 PREFIX = /usr/local

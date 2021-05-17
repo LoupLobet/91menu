@@ -1,4 +1,5 @@
 /* See LICENCE file for copyright and licence details */
+
 #include <ctype.h>
 #include <locale.h>
 #include <stdio.h>
@@ -16,7 +17,7 @@
 #define _POSIX_X_SOURCE 200809L
 #define _XOPEN_SOURCE 700
 
-enum { FG, BG, BD, NV, SL, COLORNB };
+enum { BD, BG, FG, NV, SL, COLORNB };
 enum { LEFT, CENTER, RIGHT };
 
 static void	 cleanup(void);

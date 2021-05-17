@@ -22,9 +22,9 @@ static const char *fontname = "GoMono Nerd Font:pixelsize=11:antialias=true;auto
 
 /* color scheme */
 static const char *colornames[COLORNB] = {
-	[FG] = "#586e75",	/* foreground */
-	[BG] = "#002b36",	/* background */
 	[BD] = "#586e75",	/* border */
+	[BG] = "#002b36",	/* background */
+	[FG] = "#586e75",	/* foreground */
 	[NV] = "#93a1a1",	/* inverted text */
 	[SL] = "#073642",	/* selection */
 };

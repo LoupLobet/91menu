@@ -21,8 +21,6 @@ typedef struct {
 
 typedef struct Item {
 	unsigned int extw;
-	struct Item *next;
-	struct Item *prev;
 	char *text;
 } Item;
 

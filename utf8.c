@@ -1,5 +1,5 @@
 /* See LICENCE file for copyright and licence details */
-/* this piece of software come from dmenu : http://tools.suckless.org/dmenu/ */
+/* This piece of software comes from dmenu : http://tools.suckless.org/dmenu/ */
 
 #define UTF_INVALID 0xFFFD
 #define UTF_SIZ     4

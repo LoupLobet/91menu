@@ -10,9 +10,9 @@ static unsigned int padpx    = 2;	/* padding between menu lines overrided by a g
 static unsigned int textpos = CENTER;	/* horizontal text position LEFT/CENTER/RIGTH */
 
 /* mouse */
-static unsigned int buttons[]	= { 1, 0, 1 };		/* mouse buttons, 0 untracked, 1: selection only */
-static unsigned int grabmouse   = 1;			/* 0 = ignore mouse clicks outside of the window */
-static unsigned int buttonevent	= ButtonRelease;	/* mouse event to select an item */
+static unsigned int buttons[]	= { 1, 0, 1 };	/* mouse buttons, 0 untracked, 1: selection only */
+static unsigned int grabmouse   = 1;		/* 0 = ignore mouse clicks outside of the window */
+static unsigned int buttonevent	= ButtonPress;	/* mouse event to select an item [ButtonPress|ButtonRelease] */
 
 /* geometry see XParseGeometry(3), NULL = no geometry */
 static char *geometry = NULL;

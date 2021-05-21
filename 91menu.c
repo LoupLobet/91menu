@@ -245,9 +245,12 @@ grabbuttons(void)
 	int i;
 
 	for (i = 1; i - 1 < sizeof(buttons) / sizeof(unsigned int); i++) {
-		XGrabButton(dpy, i, AnyModifier, root, True,
-		            ButtonPressMask | ButtonReleaseMask,
-		            GrabModeAsync, GrabModeAsync, None, None);
+		if (buttons[i - 1]) {
+			XUngrabButton(dpy, i, AnyModifier, root);
+			XGrabButton(dpy, i, AnyModifier, root, True,
+		                ButtonPressMask | ButtonReleaseMask,
+		                GrabModeAsync, GrabModeSync, None, None);
+		}
 	}
 }
 

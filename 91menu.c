@@ -194,6 +194,9 @@ drawmenu(int nosel)
 		case RIGHT:
 			x = drw->w - items[i].extw - gappx;
 			break;
+		default:
+			/* default = CENTER, mutes warning: x may be used uninitialized */
+			x = (drw->w - items[i].extw) / 2;
 		}
 		y = i * (drw->h / itemnb) + 0.5 * drw->font.xfont->ascent +
 		    (drw->h / itemnb - drw->font.xfont->descent) / 2;
